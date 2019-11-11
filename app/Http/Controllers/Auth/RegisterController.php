@@ -1,8 +1,16 @@
 <?php
+# @Author: maerielbenedicto
+# @Date:   2019-08-27T22:26:48+01:00
+# @Last modified by:   maerielbenedicto
+# @Last modified time: 2019-11-11T20:48:16+00:00
+
+
+
 
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -68,5 +76,8 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        $user->roles()->attach(Role::where('name','patient')->first());
+        return $user;
     }
 }

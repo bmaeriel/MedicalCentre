@@ -1,4 +1,11 @@
 <?php
+# @Author: maerielbenedicto
+# @Date:   2019-08-27T22:26:48+01:00
+# @Last modified by:   maerielbenedicto
+# @Last modified time: 2019-11-11T19:45:43+00:00
+
+
+
 
 namespace App;
 
@@ -36,4 +43,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function roles() {
+      return $this->belongsToMany('App\Role','user_role');
+    }
+
+    public function authorizeRoles($roles) {
+      if(is_array($roles)){
+        return $this->hasAnyRoles($roles) || abort(401,'This action is unathorized.');
+      }
+      return $this->hasRole($roles) || abort(401,'This action is unathorized.');
+    }
+
+    public function hasRole($role) {
+      return null != $this->roles()->where('name',$role)->first();
+    }
+
+    //In -> looks for element in a list
+    public function hasAnyRole($roles) {
+      return null != $this->roles()->whereIn('name',$roles)->first();
+    }
 }
