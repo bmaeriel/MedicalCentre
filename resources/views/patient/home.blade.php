@@ -13,10 +13,57 @@
                             {{ session('status') }}
                         </div>
                     @endif
+                    Welcome {{Auth::user()->name}}! <br/>
 
-                    You are logged in as patient!
+                    <a href="{{ route('patient.profile.show', Auth::user()->id) }}">Profile</a>
+                    <a href="{{ route('patient.profile.edit', Auth::user()->id) }}">Edit</a>
+                    <br/>
                 </div>
             </div>
+        </div>
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              Visits
+            </div>
+            <div class="card-body">
+              @if (count($visits) === 0)
+                <p> There are no visits! </p>
+              @else
+                <table id="table-visits" class="table table-hover">
+                  <thead>
+                    <th> Doctor </th>
+                    <th> Patient</th>
+                    <th> Date </th>
+                    <th> Time </th>
+                    <th> Duration </th>
+                    <th> Cost </th>
+                    <th>Actions</th>
+                  </thead>
+                  <tbody>
+                    @foreach ($visits as $visit)
+                      <tr data-id="{{ $visit->id }}">
+                        <td>{{ $visit->doctor->user->name }}</td>
+                        <td>{{ $visit->patient->user->name }}</td>
+                        <td>{{ $visit->date }}</td>
+                        <td>{{ $visit->time }}</td>
+                        <td>{{ $visit->duration }}</td>
+                        <td>{{ $visit->cost }}</td>
+                        <td>
+                          <a href="{{ route('patient.visit.show', $visit->id) }}" class="btn btn-default">View</a>
+                          <form style="display:inline-block" method="POST" action="{{ route('patient.visit.destroy', $visit->id)}}">
+                            <input type="hidden" name="_method" value="DELETE"/>
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+                            <button type="submit" class="form-control btn btn-danger">Cancel</a>
+                          </form>
+                        </td>
+                      </tr>
+                    @endforeach
+                  </tbody>
+                </table>
+              @endif
+            </div>
+          </div>
         </div>
     </div>
 </div>

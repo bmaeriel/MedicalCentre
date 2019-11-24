@@ -2,7 +2,7 @@
 # @Author: maerielbenedicto
 # @Date:   2019-11-11T19:42:52+00:00
 # @Last modified by:   maerielbenedicto
-# @Last modified time: 2019-11-11T19:43:57+00:00
+# @Last modified time: 2019-11-19T16:39:52+00:00
 
 
 
@@ -26,8 +26,8 @@ class CreateUserRoleTable extends Migration
             $table->bigInteger('role_id')->unsigned();
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('restrict');
-            $table->foreign('role_id')->references('id')->on('roles')->onUpdate('cascade')->onDelete('restrict');
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('role_id')->references('id')->on('roles')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

@@ -8,6 +8,10 @@
 
 
 namespace App\Http\Controllers\Patient;
+use App\Patient;
+use App\User;
+use App\Visit;
+use Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -22,6 +26,13 @@ class HomeController extends Controller
   }
 
   public function index() {
-    return view('patient.home');
+
+    $patient = Auth::user();
+    $visits = $patient->visit()->get();
+    // dd($visits);
+    return view('patient.home')->with([
+      'patient' => $patient,
+      'visits' => $visits
+    ]);
   }
 }

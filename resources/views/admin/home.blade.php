@@ -15,6 +15,9 @@
                     @endif
 
                     You are logged in as Admin!
+
+                    <a href="{{ route('admin.doctors.index')}}"> Doctors</a>
+                    <a href="{{ route('admin.patients.index')}}"> Patients</a>
                 </div>
             </div>
         </div>

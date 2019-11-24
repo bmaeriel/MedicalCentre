@@ -8,6 +8,11 @@
 
 
 namespace App\Http\Controllers\Doctor;
+use App\Doctor;
+use App\User;
+use App\Role;
+use App\Visit;
+use Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -22,6 +27,13 @@ class HomeController extends Controller
   }
 
   public function index() {
-    return view('doctor.home');
+
+    $doctor = Auth::user();
+    $visits = $doctor->visits()->get();
+    // dd($doctor);
+    return view('doctor.home')->with([
+      'doctor' => $doctor,
+      'visits' => $visits
+    ]);
   }
 }

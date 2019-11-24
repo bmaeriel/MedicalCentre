@@ -2,7 +2,7 @@
 # @Author: maerielbenedicto
 # @Date:   2019-08-27T22:26:48+01:00
 # @Last modified by:   maerielbenedicto
-# @Last modified time: 2019-11-11T20:48:16+00:00
+# @Last modified time: 2019-11-12T14:36:25+00:00
 
 
 
@@ -60,6 +60,10 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'address1' => ['required', 'string', 'max:255'],
+            'city' => ['required', 'string', 'max:255'],
+            'country' => ['required', 'string', 'max:255'],
+            'phone_number' => ['required', 'string', 'max:255']
         ]);
     }
 
@@ -71,13 +75,18 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user =  User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'address1' => $data['address1'],
+            'city' => $data['city'],
+            'country' => $data['country'],
+            'phone_number' => $data['phone_number']
         ]);
 
         $user->roles()->attach(Role::where('name','patient')->first());
+
         return $user;
     }
 }

@@ -2,7 +2,7 @@
 # @Author: maerielbenedicto
 # @Date:   2019-08-27T22:26:48+01:00
 # @Last modified by:   maerielbenedicto
-# @Last modified time: 2019-11-11T19:42:02+00:00
+# @Last modified time: 2019-11-12T13:23:29+00:00
 
 
 
@@ -26,6 +26,11 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('address1');
+            $table->string('address2')->nullable();
+            $table->string('city');
+            $table->string('country');
+            $table->string('phone_number');
             $table->rememberToken();
             $table->timestamps();
         });

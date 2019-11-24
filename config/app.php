@@ -1,4 +1,11 @@
 <?php
+# @Author: maerielbenedicto
+# @Date:   2019-08-27T22:26:48+01:00
+# @Last modified by:   maerielbenedicto
+# @Last modified time: 2019-11-12T00:12:53+00:00
+
+
+
 
 return [
 
@@ -13,7 +20,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Medical Centre'),
 
     /*
     |--------------------------------------------------------------------------
@@ -106,7 +113,7 @@ return [
     |
     */
 
-    'faker_locale' => 'en_US',
+    'faker_locale' => 'en_GB',
 
     /*
     |--------------------------------------------------------------------------

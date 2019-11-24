@@ -2,7 +2,7 @@
 # @Author: maerielbenedicto
 # @Date:   2019-08-27T22:26:48+01:00
 # @Last modified by:   maerielbenedicto
-# @Last modified time: 2019-11-11T19:45:43+00:00
+# @Last modified time: 2019-11-19T00:05:32+00:00
 
 
 
@@ -23,7 +23,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'address1','city','country','phone_number'
     ];
 
     /**
@@ -44,8 +44,24 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function doctor(){
+      return $this->hasOne('App\Doctor');
+    }
+
+    public function patient(){
+      return $this->hasOne('App\Patient');
+    }
+
     public function roles() {
       return $this->belongsToMany('App\Role','user_role');
+    }
+
+    public function visits() {
+      return $this->hasManyThrough('App\Visit','App\Doctor');
+    }
+
+    public function visit() {
+      return $this->hasManyThrough('App\Visit','App\Patient');
     }
 
     public function authorizeRoles($roles) {
@@ -63,4 +79,6 @@ class User extends Authenticatable
     public function hasAnyRole($roles) {
       return null != $this->roles()->whereIn('name',$roles)->first();
     }
+
+
 }

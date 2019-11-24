@@ -2,7 +2,7 @@
 # @Author: maerielbenedicto
 # @Date:   2019-11-09T00:46:23+00:00
 # @Last modified by:   maerielbenedicto
-# @Last modified time: 2019-11-11T20:31:52+00:00
+# @Last modified time: 2019-11-12T14:25:56+00:00
 
 
 
@@ -31,7 +31,7 @@ class HomeController extends Controller
     public function index(Request $request)
     {
       $user = $request->user();
-      $home = 'user.home';
+      $home = 'patient.home';
 
       if($user->hasRole('admin')){
         $home = 'admin.home';
