@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Doctor;
 use App\User;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
@@ -25,6 +26,7 @@ class ProfileController extends Controller
     public function show($id)
     {
       $doctor = Doctor::find($id);
+      // dd($doctor);
       return view('doctor.show')->with([
         'doctor' => $doctor
       ]);
@@ -56,6 +58,7 @@ class ProfileController extends Controller
       $request->validate([
         'name' => ['required', 'string', 'max:255'],
         'email' => ['required', 'string', 'email', 'max:255'],
+        'password' => ['required', 'string', 'min:8', 'confirmed'],
         'address1' => ['required', 'string', 'max:255'],
         'city' => ['required', 'string', 'max:255'],
         'country' => ['required', 'string', 'max:255'],
@@ -66,7 +69,7 @@ class ProfileController extends Controller
       $doctor = Doctor::findOrFail($id);
       $doctor->user->name = $request->input('name');
       $doctor->user->email = $request->input('email');
-      $doctor->user->password = bcrypt('secret');
+      $doctor->user->password = Hash::make($request['password']);
       $doctor->user->address1 = $request->input('address1');
       $doctor->user->address2 = $request->input('address2');
       $doctor->user->city = $request->input('city');
@@ -76,7 +79,7 @@ class ProfileController extends Controller
       $doctor->date_start = $request->input('date_start');
       $doctor->user->save();
 
-
+      $request->session()->flash('success', 'Profile updated successfully!'); //create flash message
       return redirect()->route('doctor.home');
     }
 }

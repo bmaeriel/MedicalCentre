@@ -85,6 +85,7 @@ class VisitController extends Controller
       $visit->cost = $request->input('cost');
       $visit->save();
 
+      $request->session()->flash('success', 'Visit added successfully!'); //create flash message
       return redirect()->route('admin.visits.index');
     }
 
@@ -161,6 +162,7 @@ class VisitController extends Controller
       $visit->cost = $request->input('cost');
       $visit->save();
 
+      $request->session()->flash('info', 'Visit updated successfully!'); //create flash message
       return redirect()->route('admin.visits.index');
     }
 
@@ -170,11 +172,12 @@ class VisitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
       $visit = Visit::findOrFail($id);
       // $user = User::findOrFail($id);
       $visit->delete();
+      $request->session()->flash('danger', 'Visit deleted successfully!'); //create flash message
       return redirect()->route('admin.visits.index');
     }
 }

@@ -32,10 +32,8 @@ class DoctorController extends Controller
     public function index()
     {
       $doctor = Doctor::all();
-      $user = User::all();
       return view('admin.doctors.index')->with([
-        'doctors' => $doctor,
-        'user' => $user
+        'doctors' => $doctor
       ]);
     }
 
@@ -83,6 +81,9 @@ class DoctorController extends Controller
       $doctor->save();
 
       $user->roles()->attach(Role::where('name','doctor')->first());
+
+      // DB::table('password_resets')->insert( ['email' => $request->email, 'token' => $token, 'created_at' => Carbon::now()] );
+      $request->session()->flash('success', 'Doctor added successfully!'); //create flash message
       return redirect()->route('admin.doctors.index');
     }
 
@@ -149,6 +150,7 @@ class DoctorController extends Controller
       $doctor->user->save();
 
 
+      $request->session()->flash('info', 'Doctor updated successfully!'); //create flash message
       return redirect()->route('admin.doctors.index');
     }
 
@@ -158,11 +160,12 @@ class DoctorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-      $doctor = Doctor::findOrFail($id);
-      // $user = User::findOrFail($id);
-      $doctor->user()->delete();
+      $doctor = Doctor::find($id);
+      // dd($doctor);
+      $doctor->user->delete();
+      $request->session()->flash('danger', 'Doctor deleted successfully!'); //create flash message
       return redirect()->route('admin.doctors.index');
     }
 }

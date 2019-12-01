@@ -32,16 +32,6 @@ class UsersTableSeeder extends Seeder
           factory(App\Patient::class)->create(['user_id'=> $user->id]);
         });
 
-
-
-        // $roles = App\Role::all();
-        //
-        // App\User::all()->each(function ($user) use ($roles){
-        //   $user->roles()->attach(
-        //     $roles->random(1)
-        //   );
-        // });
-
         $role_admin = Role::where('name','admin')->first();
         $role_doctor = Role::where('name','doctor')->first();
         $role_patient = Role::where('name','patient')->first();
@@ -58,34 +48,6 @@ class UsersTableSeeder extends Seeder
         $admin->save();
 
         $admin->roles()->attach($role_admin);
-
-        $user = new User();
-        $user->name = 'Karen C';
-        $user->email = 'kc@medcentre.ie';
-        $user->password = bcrypt('secret');
-        $user->address1 = rand(1, 100);
-        $user->address2 = "Main Street";
-        $user->city = 'Dun laoghaire';
-        $user->country = 'Ireland';
-        $user->phone_number = '0' . $this->random_str(2, '0123456789') . '-' . $this->random_str(7, '0123456789');
-        $user->save();
-
-        $user->roles()->attach($role_doctor);
-
-        $user = new User();
-        $user->name = 'Zion B';
-        $user->email = 'zb@medcentre.ie';
-        $user->password = bcrypt('secret');
-        $user->address1 = rand(1, 100);
-        $user->address2 = "Main Street";
-        $user->city = 'Dun laoghaire';
-        $user->country = 'Ireland';
-        $user->phone_number = '0' . $this->random_str(2, '0123456789') . '-' . $this->random_str(7, '0123456789');
-        $user->save();
-
-        $user->roles()->attach($role_patient);
-
-
     }
 
     //only accessible within users table seeder

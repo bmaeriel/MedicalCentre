@@ -35,5 +35,8 @@ class ForgotPasswordController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+        $this->middleware('auth');
+        $this->middleware('role:doctor');
+        $this->middleware('role:patient');
     }
 }

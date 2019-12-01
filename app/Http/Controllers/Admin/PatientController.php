@@ -30,10 +30,8 @@ class PatientController extends Controller
   public function index()
   {
     $patients = Patient::all();
-    $user = User::all();
     return view('admin.patients.index')->with([
-      'patients' => $patients,
-      'user' => $user
+      'patients' => $patients
     ]);
   }
 
@@ -83,6 +81,8 @@ class PatientController extends Controller
     $patient->save();
 
     $user->roles()->attach(Role::where('name','patient')->first());
+
+    $request->session()->flash('success', 'Patient added successfully!'); //create flash message
     return redirect()->route('admin.patients.index');
   }
 
@@ -110,7 +110,7 @@ class PatientController extends Controller
    */
   public function edit($id)
   {
-    $patient = Patient::findOrFail($id);
+    $patient = Patient::find($id);
     return view('admin.patients.edit')->with([
       'patient' => $patient
     ]);
@@ -145,12 +145,12 @@ class PatientController extends Controller
     $patient->user->country = $request->input('country');
     $patient->user->phone_number = $request->input('phone_number');
     $patient->user_id = $user->id;
-    $patient->date_start = $request->input('date_start');
     $patient->medical_insurance = $request->input('medical_insurance');
     $patient->insurance_company = $request->input('insurance_company');
     $patient->policy_number = $request->input('policy_number');
     $patient->user->save();
 
+    $request->session()->flash('info', 'Patient updated successfully!'); //create flash message
     return redirect()->route('admin.patients.index');
   }
 
@@ -160,10 +160,11 @@ class PatientController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function destroy($id)
+  public function destroy(Request $request, $id)
   {
-    $patient = Patient::findOrFail($id);
+    $patient = Patient::find($id);
     $patient->user()->delete();
+    $request->session()->flash('danger', 'Patient deleted successfully!'); //create flash message
     return redirect()->route('admin.patients.index');
   }
 }

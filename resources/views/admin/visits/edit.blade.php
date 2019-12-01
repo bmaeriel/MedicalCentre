@@ -56,9 +56,9 @@
                       <label for="duration"> Duration </label>
                       <select name="duration" class="form-control">
                         <option value="">Select duration</option>
-                        <option value="15 minutes"  {{ ( $visit->duration == $visit->duration) ? 'selected' : '' }}>15 minutes </option>
-                        <option value="30 minutes" {{ ( $visit->duration == $visit->duration) ? 'selected' : '' }}>30 minutes </option>
-                        <option value="1 hour" {{ ( $visit->duration == $visit->duration) ? 'selected' : '' }}>1 hour </option>
+                        <option value="15 minutes">15 minutes </option>
+                        <option value="30 minutes">30 minutes </option>
+                        <option value="1 hour">1 hour </option>
                       </select>
               </div>
               <div class="form-group ">
@@ -74,4 +74,5 @@
       </div>
     </div>
   </div>
+  @include('layouts.footer')
 @endsection

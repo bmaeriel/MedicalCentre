@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Role;
+use App\Patient;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -36,7 +37,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -85,8 +86,18 @@ class RegisterController extends Controller
             'phone_number' => $data['phone_number']
         ]);
 
-        $user->roles()->attach(Role::where('name','patient')->first());
+        $patient = Patient::create([
+          'user_id' => $user->id
+        ]);
 
+        $user->roles()->attach(Role::where('name','patient')->first());
+        // dd($user);
         return $user;
+
+        // $patient->save();
+        // dd($patient);
+        // $patient->roles()->attach(Role::where('name','patient')->first());
+
+
     }
 }

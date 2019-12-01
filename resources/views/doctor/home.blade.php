@@ -2,28 +2,23 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
-
+    <div class="row">
+        <div class="col-md-4">
+          <div class="card">
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    Welcome Dr. {{Auth::user()->name}}! <br/>
-
-                    <a href="{{ route('doctor.profile.show', Auth::user()->id) }}">Profile</a>
-                    {{-- <a href="{{ route('doctor.visit.index') }}">Visits</a> --}}
-                    {{-- <a href="{{ route('doctor.visits.create', Auth::user()->id) }}">Add Visits</a> --}}
-
+                    <h2>Welcome <br/>Dr. {{Auth::user()->name}}!</h2> <br/>
+                    Manage your appointments: <br/>
+                    Add, update and cancel appointments.
                 </div>
-            </div>
+              </div>
         </div>
-        <div class="col-md-12">
+
+        <div class="col-md-8">
           <div class="card">
             <div class="card-header">
               Visits
@@ -35,7 +30,6 @@
               @else
                 <table id="table-visits" class="table table-hover">
                   <thead>
-                    <th> Doctor </th>
                     <th> Patient</th>
                     <th> Date </th>
                     <th> Time </th>
@@ -46,7 +40,6 @@
                   <tbody>
                     @foreach ($visits as $visit)
                       <tr data-id="{{ $visit->id }}">
-                        <td>{{ $visit->doctor->user->name }}</td>
                         <td>{{ $visit->patient->user->name }}</td>
                         <td>{{ $visit->date }}</td>
                         <td>{{ $visit->time }}</td>
@@ -71,4 +64,5 @@
         </div>
     </div>
 </div>
+@include('layouts.footer')
 @endsection

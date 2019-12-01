@@ -18,10 +18,11 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm pt-4 mb-4">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Medical Centre') }}
@@ -34,7 +35,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
 
-                      <a class="navbar-brand" href="{{ route('admin.doctors.index') }}">
+                      {{-- <a class="navbar-brand" href="{{ route('admin.doctors.index') }}">
                               Doctors
                       </a>
                       <a class="navbar-brand" href="{{ route('admin.patients.index') }}">
@@ -42,10 +43,22 @@
                       </a>
                       <a class="navbar-brand" href="{{ route('admin.visits.index') }}">
                               Visits
-                      </a>
+                      </a> --}}
 
                     <ul class="navbar-nav mr-auto">
-
+                        @if(Auth::check())
+                           @if (Auth::user()->isAdmin())
+                          <a class="navbar-brand" href="{{ route('admin.doctors.index') }}">
+                                  Doctors
+                          </a>
+                          <a class="navbar-brand" href="{{ route('admin.patients.index') }}">
+                                  Patients
+                          </a>
+                          <a class="navbar-brand" href="{{ route('admin.visits.index') }}">
+                                  Visits
+                          </a>
+                          @endif
+                        @endif
                     </ul>
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -60,8 +73,24 @@
                                 </li>
                             @endif
                         @else
-
-
+                          @if(Auth::check())
+                            @if(Auth::user()->isPatient())
+                              <a class="nav-link" href="{{ route('patient.home') }}">
+                                      Dashboard
+                              </a>
+                              <a class="nav-link" href="{{ route('patient.profile.show', Auth::user()->id) }}">
+                                      Profile
+                              </a>
+                            @endif
+                            @if(Auth::user()->isDoctor())
+                              <a class="nav-link" href="{{ route('doctor.home') }}">
+                                      Dashboard
+                              </a>
+                              <a class="nav-link" href="{{ route('doctor.profile.show', Auth::user()->id) }}">
+                                      Profile
+                              </a>
+                            @endif
+                          @endif
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -80,14 +109,35 @@
                                 </div>
                             </li>
                         @endguest
+
                     </ul>
                 </div>
             </div>
         </nav>
 
-        <main class="py-4">
+        <main>
+          <div class="container">
+            <div class="row">
+              {{-- loops through the alert keys then show specific alert style --}}
+              <div class="col-md-12">
+                @foreach (['danger','info','success'] as $key)
+                  @if(Session::has($key))
+                    <div class="alert alert-{{$key}} alert-dismissible fade show" role="alert">
+                            {{ Session::get($key)}}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                  @endif
+                @endforeach
+              </div>
+            </div>
+          </div>
             @yield('content')
         </main>
     </div>
 </body>
+<script>
+  setTimeout(function(){ $(".alert").alert('close') }, 5000); //alert disappears after 2 seconds
+</script>
 </html>

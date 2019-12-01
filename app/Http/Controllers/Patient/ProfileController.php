@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Patient;
 use App\User;
 use Auth;
+use Illuminate\Support\Facades\Hash;
+
 
 class ProfileController extends Controller
 {
@@ -26,7 +28,7 @@ class ProfileController extends Controller
     public function show($id)
     {
       // dd($id);
-      $patient = User::find($id);
+      $patient = Patient::where('user_id', $id)->first();
       // dd($patient);
        return view('patient.show')->with([
         'patient' => $patient
@@ -41,7 +43,8 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {
-      $patient = User::findOrFail($id);
+      $patient = Patient::find($id);
+      // dd($patient);
       return view('patient.edit')->with([
         'patient' => $patient
       ]);
@@ -59,6 +62,7 @@ class ProfileController extends Controller
       $request->validate([
         'name' => ['required', 'string', 'max:255'],
         'email' => ['required', 'string', 'email', 'max:255'],
+        'password' => ['required', 'string', 'min:8', 'confirmed'],
         'address1' => ['required', 'string', 'max:255'],
         'city' => ['required', 'string', 'max:255'],
         'country' => ['required', 'string', 'max:255'],
@@ -69,7 +73,7 @@ class ProfileController extends Controller
       $patient = Patient::findOrFail($id);
       $patient->user->name = $request->input('name');
       $patient->user->email = $request->input('email');
-      $patient->user->password = bcrypt('secret');
+      $patient->user->password = Hash::make($request['password']);
       $patient->user->address1 = $request->input('address1');
       $patient->user->address2 = $request->input('address2');
       $patient->user->city = $request->input('city');
@@ -82,6 +86,7 @@ class ProfileController extends Controller
       $patient->policy_number = $request->input('policy_number');
       $patient->user->save();
 
+      $request->session()->flash('success', 'Profile updated successfully!'); //create flash message
       return redirect()->route('patient.home');
     }
 }

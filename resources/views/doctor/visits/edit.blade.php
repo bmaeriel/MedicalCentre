@@ -25,11 +25,12 @@
                       <label for="doctor_id">Doctor</label>
                       <select name="doctor_id" class="form-control">
                         {{-- <option value="">Select Doctor</option> --}}
-                        @foreach($doctors as $doctor)
+                        {{-- @foreach($doctors as $doctor)
                           <option value="{{ $doctor->id }}" {{ ( $visit->doctor_id == $doctor->id) ? 'selected' : '' }}>
                             {{$doctor->user->name}}
                           </option>
-                        @endforeach
+                        @endforeach --}}
+                        <option value="{{$visit->doctor->id}}">{{$visit->doctor->user->name}}</option>
                       </select>
               </div>
 
@@ -74,4 +75,5 @@
       </div>
     </div>
   </div>
+  @include('layouts.footer')
 @endsection

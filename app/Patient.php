@@ -13,8 +13,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Patient extends Model
 {
+
+  /**
+   * The attributes that are mass assignable.
+   *
+   * @var array
+   */
+  protected $fillable = [
+      'user_id'
+  ];
+
+  // protected $attributes = [
+  //     'medical_insurance' = "No";
+  // ];
+
   public function user(){
-    return $this->belongsTo('App\User');
+    return $this->belongsTo('App\User','user_id');
   }
 
   // public function visits(){

@@ -2,26 +2,23 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+    <div class="row">
+        <div class="col-md-4">
             <div class="card">
-                <div class="card-header">Dashboard</div>
-
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
                         </div>
                     @endif
-                    Welcome {{Auth::user()->name}}! <br/>
-
-                    <a href="{{ route('patient.profile.show', Auth::user()->id) }}">Profile</a>
-                    <a href="{{ route('patient.profile.edit', Auth::user()->id) }}">Edit</a>
+                    <h2>Welcome <br/> {{Auth::user()->name}}!</h2> <br/>
+                    Manage your appointments: <br/>
+                    View and cancel anytime!
                     <br/>
                 </div>
             </div>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-8">
           <div class="card">
             <div class="card-header">
               Visits
@@ -33,7 +30,6 @@
                 <table id="table-visits" class="table table-hover">
                   <thead>
                     <th> Doctor </th>
-                    <th> Patient</th>
                     <th> Date </th>
                     <th> Time </th>
                     <th> Duration </th>
@@ -44,7 +40,6 @@
                     @foreach ($visits as $visit)
                       <tr data-id="{{ $visit->id }}">
                         <td>{{ $visit->doctor->user->name }}</td>
-                        <td>{{ $visit->patient->user->name }}</td>
                         <td>{{ $visit->date }}</td>
                         <td>{{ $visit->time }}</td>
                         <td>{{ $visit->duration }}</td>
@@ -67,4 +62,5 @@
         </div>
     </div>
 </div>
+@include('layouts.footer')
 @endsection

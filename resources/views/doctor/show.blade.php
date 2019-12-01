@@ -3,10 +3,10 @@
 @section('content')
   <div class="container">
     <div class="row">
-      <div class="col-md-8 col-md-offset-2">
-        <div class="card">
+      <div class="col-md-6 col-md-offset-2">
+        <div class="card mt-4 mb-4" >
           <div class="card-header">
-            Doctor details: {{$doctor->user->name}}
+            My Profile
           </div>
           <div class="card-body">
               <table class="table table-hover">
@@ -20,20 +20,12 @@
                     <td>{{ $doctor->user->email }}</td>
                   </tr>
                   <tr>
-                    <td>Address 1</td>
-                    <td>{{ $doctor->user->address1 }}</td>
-                  </tr>
-                  <tr>
-                    <td>Address 2</td>
-                    <td>{{ $doctor->user->address2 }}</td>
-                  </tr>
-                  <tr>
-                    <td>City</td>
-                    <td>{{ $doctor->user->city }}</td>
-                  </tr>
-                  <tr>
-                    <td>Country</td>
-                    <td>{{ $doctor->user->country }}</td>
+                    <td>Address</td>
+                    <td>{{ $doctor->user->address1 }}
+                        {{ $doctor->user->address2 }} <br/>
+                        {{ $doctor->user->city }}<br/>
+                        {{ $doctor->user->country }}
+                  </td>
                   </tr>
                   <tr>
                     <td>Phone Number</td>
@@ -53,4 +45,5 @@
       </div>
     </div>
   </div>
+  @include('layouts.footer')
 @endsection

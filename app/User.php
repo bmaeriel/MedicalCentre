@@ -12,6 +12,8 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+// use Illuminate\Contracts\Auth\CanResetPassword;
+use Illuminate\Auth\Passwords\CanResetPassword;
 
 class User extends Authenticatable
 {
@@ -78,6 +80,18 @@ class User extends Authenticatable
     //In -> looks for element in a list
     public function hasAnyRole($roles) {
       return null != $this->roles()->whereIn('name',$roles)->first();
+    }
+
+    public function isAdmin() {
+      return $this->hasRole('admin');
+    }
+
+    public function isDoctor() {
+      return $this->hasRole('doctor');
+    }
+
+    public function isPatient() {
+      return $this->hasRole('patient');
     }
 
 

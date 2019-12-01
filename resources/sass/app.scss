@@ -3,6 +3,12 @@
 
 // Variables
 @import 'variables';
+$fa-font-path: “../webfonts”;
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+//fontawesome
+@import "node_modules/font-awesome/scss/font-awesome.scss";
+@import '~@fortawesome/fontawesome-free/scss/fontawesome.scss';
+@import '~@fortawesome/fontawesome-free/scss/solid.scss';

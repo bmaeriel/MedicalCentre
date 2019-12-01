@@ -103,8 +103,8 @@
               <div class="form-group row">
                   <label for="medical_insurance" class="col-md-4 col-form-label text-md-right">{{ __('Medical Insurance') }}</label>
                   <div class="col-md-6">
-                    <input type="radio" name="medical_insurance" value="Yes"/> Yes</br>
-                    <input type="radio" name="medical_insurance" value="No"/> No</br>
+                    <input type="radio" onclick="showForm();" name="medical_insurance" value="Yes"/> Yes</br>
+                    <input type="radio" onclick="hideForm();" name="medical_insurance" value="No"/> No</br>
                       @error('medical_insurance')
                           <span class="invalid-feedback" role="alert">
                               <strong>{{ $message }}</strong>
@@ -112,6 +112,7 @@
                       @enderror
                   </div>
               </div>
+              <div id="more-details" class="more-details">
               <div class="form-group row">
                   <label for="insurance_company" class="col-md-4 col-form-label text-md-right">{{ __('Insurance company name') }}</label>
                   <div class="col-md-6">
@@ -134,6 +135,7 @@
                       @enderror
                   </div>
               </div>
+            </div>
 
               <a href="{{ route('admin.patients.index') }}" class="btn btn-link"> Cancel </a>
               <button type="submit" class="btn btn-primary float-right"> Submit </button>
@@ -143,4 +145,5 @@
       </div>
     </div>
   </div>
+  @include('layouts.footer')
 @endsection
