@@ -3,10 +3,10 @@
 @section('content')
   <div class="container">
     <div class="row">
-      <div class="col-md-8 col-md-offset-2">
+      <div class="col-md-6 col-md-offset-2">
         <div class="card">
           <div class="card-header">
-            Doctor: {{$doctor->user->name}}
+            Doctor details
           </div>
           <div class="card-body">
               <table class="table table-hover">
@@ -20,20 +20,12 @@
                     <td>{{ $doctor->user->email }}</td>
                   </tr>
                   <tr>
-                    <td>Address 1</td>
-                    <td>{{ $doctor->user->address1 }}</td>
-                  </tr>
-                  <tr>
-                    <td>Address 2</td>
-                    <td>{{ $doctor->user->address2 }}</td>
-                  </tr>
-                  <tr>
-                    <td>City</td>
-                    <td>{{ $doctor->user->city }}</td>
-                  </tr>
-                  <tr>
-                    <td>Country</td>
-                    <td>{{ $doctor->user->country }}</td>
+                    <td>Address</td>
+                    <td>{{ $doctor->user->address1 }}
+                        {{ $doctor->user->address2 }}<br/>
+                        {{ $doctor->user->city }}
+                        {{ $doctor->user->country }}
+                    </td>
                   </tr>
                   <tr>
                     <td>Phone Number</td>
@@ -54,6 +46,8 @@
               </form>
           </div>
         </div>
+      </div>
+        <div class="col-md-6">
         <div class="card">
           <div class="card-header">
             Visits <a href="{{ route('admin.visits.create', $doctor->id)}}" class="btn btn-primary float-right"> Add </a>
@@ -64,10 +58,9 @@
                 @if (count($visits) == 0)
                   <p>There are no visits!</p>
                 @else
-                    {{-- <li> {{ $visit->time}} </li> --}}
                     <table id="table-visits" class="table table-hover">
                       <thead>
-                        <th> Name</th>
+                        <th> Patient Name</th>
                         <th> Time</th>
                         <th>Actions</th>
                       </thead>
@@ -77,7 +70,7 @@
                             <td>{{ $visit->patient->user->name }}</td>
                             <td>{{ $visit->time }}</td>
                             <td>
-                              <a href="{{ route('admin.visits.show', $doctor->id) }}" class="btn btn-default">View</a>
+                              <a href="{{ route('admin.visits.show', $visit->id) }}" class="btn btn-default">View</a>
                             </td>
                           </tr>
                         @endforeach

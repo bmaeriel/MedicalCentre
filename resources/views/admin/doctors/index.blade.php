@@ -45,9 +45,11 @@
               </table>
             @endif
           </div>
+          <div class="d-flex justify-content-center">
+            {{ $doctors->links() }}
+          </div>
         </div>
       </div>
     </div>
   </div>
-  @include('layouts.footer')
 @endsection

@@ -28,6 +28,8 @@ class HomeController extends Controller
   public function index() {
 
     $patient = Auth::user();
+    
+    //retrieve all visit of patient
     $visits = $patient->visit()->get();
     // dd($visits);
     return view('patient.home')->with([

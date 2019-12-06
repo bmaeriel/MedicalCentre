@@ -4,10 +4,10 @@
 <div class="container pb-5 pt-2">
     <div class="row justify-content-center mt-5">
         <div class="col-md-5">
-            <div class="card">
+            <div>
                 {{-- <div class="card-header">{{ __('Login') }}</div> --}}
 
-                <div class="card-body mt-2 mb-3">
+                <div class="mt-2 mb-3">
                     <form  class="text-center pl-5 pr-5 pt-4 pb-4" method="POST" action="{{ route('login') }}">
                         @csrf
                         <h3 class="mb-4"> Log in</h3>

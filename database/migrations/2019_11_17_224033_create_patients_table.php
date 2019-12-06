@@ -23,7 +23,7 @@ class CreatePatientsTable extends Migration
         Schema::create('patients', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('user_id')->unsigned();
-            $table->string('medical_insurance')->default("No");
+            $table->string('medical_insurance')->default("No"); //set default to No
             $table->string('insurance_company')->nullable();
             $table->string('policy_number')->nullable();
             $table->timestamps();

@@ -34,7 +34,6 @@
                     <th> Date </th>
                     <th> Time </th>
                     <th> Duration </th>
-                    <th> Cost </th>
                     <th>Actions</th>
                   </thead>
                   <tbody>
@@ -44,7 +43,6 @@
                         <td>{{ $visit->date }}</td>
                         <td>{{ $visit->time }}</td>
                         <td>{{ $visit->duration }}</td>
-                        <td>{{ $visit->cost }}</td>
                         <td>
                           <a href="{{ route('doctor.visit.show', $visit->id) }}" class="btn btn-default">View</a>
                           <a href="{{ route('doctor.visit.edit', $visit->id) }}" class="btn btn-warning">Edit</a>

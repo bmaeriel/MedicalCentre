@@ -25,14 +25,9 @@ class VisitController extends Controller
      */
     public function index()
     {
-      $doctors = Doctor::All();
-      $patients = Patient::All();
-      $users = User::All();
-      $visits = Visit::All();
+      //limit data to 6
+      $visits = Visit::orderBy('date','asc')->paginate(6);
       return view('admin.visits.index')->with([
-        'doctors' => $doctors,
-        'patients' => $patients,
-        'users' => $users,
         'visits' => $visits
       ]);
     }
@@ -44,14 +39,12 @@ class VisitController extends Controller
      */
     public function create()
     {
+      //retrieve all doctors/patients data
       $doctors = Doctor::All();
       $patients = Patient::All();
-      $users = User::All();
-      // $dId = Doctor::find();
       return view('admin.visits.create')->with([
         'doctors' => $doctors,
-        'patients' => $patients,
-        'users' => $users,
+        'patients' => $patients
       ]);
     }
 
@@ -72,10 +65,7 @@ class VisitController extends Controller
         'cost' => ['required', 'numeric']
       ]);
 
-      $doctor = Doctor::find(1);
-      $patient = Patient::find(1);
-      // $user = User::findOrFail(1);
-
+      //create new visit
       $visit = new Visit();
       $visit->doctor_id = $request->input('doctor_id');
       $visit->patient_id = $request->input('patient_id');
@@ -83,7 +73,7 @@ class VisitController extends Controller
       $visit->time = $request->input('time');
       $visit->duration = $request->input('duration');
       $visit->cost = $request->input('cost');
-      $visit->save();
+      $visit->save(); //save visit
 
       $request->session()->flash('success', 'Visit added successfully!'); //create flash message
       return redirect()->route('admin.visits.index');
@@ -97,12 +87,8 @@ class VisitController extends Controller
      */
     public function show($id)
     {
-      $doctor = Doctor::find(1);
-      $patient = Patient::find(1);
       $visit = Visit::find($id);
       return view('admin.visits.show')->with([
-        'doctors' => $doctor,
-        'patients' => $patient,
         'visit' => $visit
       ]);
     }
@@ -115,18 +101,14 @@ class VisitController extends Controller
      */
     public function edit($id)
     {
+      //retrieve all doctors/patients
       $doctors = Doctor::all();
       $patients = Patient::all();
-      $user = User::findOrFail(1);
 
-      $doctor = Doctor::find(1);
-      $patient = Patient::find(1);
+      //get visit with the $id
       $visit = Visit::find($id);
       return view('admin.visits.edit')->with([
-        'doctor' => $doctor,
-        'patient' => $patient,
         'visit' => $visit,
-        'user' => $user,
         'doctors' => $doctors,
         'patients' => $patients,
 
@@ -151,8 +133,6 @@ class VisitController extends Controller
         'cost' => ['required', 'numeric']
       ]);
 
-      $doctor = Doctor::find(1);
-      $patient = Patient::find(1);
       $visit = Visit::findOrFail($id);
       $visit->patient_id = $request->input('patient_id');
       $visit->doctor_id = $request->input('doctor_id');
@@ -175,7 +155,6 @@ class VisitController extends Controller
     public function destroy(Request $request, $id)
     {
       $visit = Visit::findOrFail($id);
-      // $user = User::findOrFail($id);
       $visit->delete();
       $request->session()->flash('danger', 'Visit deleted successfully!'); //create flash message
       return redirect()->route('admin.visits.index');

@@ -4,7 +4,7 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-8 col-md-offset-2">
-        <div class="card mt-4 mb-4">
+        <div class="card mb-5">
           <div class="card-header">
             Edit  doctor
           </div>
@@ -35,7 +35,7 @@
 
                 <div class="col">
                   <label for="password">Password</label>
-                  <input id="text" type="password" class="form-control @error('password') is-invalid @enderror" name="password" value="{{ old('email', $doctor->user->password) }}">
+                  <input id="text" type="password" class="form-control @error('password') is-invalid @enderror" name="password" value="{{ old('password', Str::limit($doctor->user->password,8)) }}">
                 </div>
                 <div class="col">
                   <label for="password">Confirm Password</label>

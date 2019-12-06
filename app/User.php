@@ -82,14 +82,17 @@ class User extends Authenticatable
       return null != $this->roles()->whereIn('name',$roles)->first();
     }
 
+    //checks if user has role admin
     public function isAdmin() {
       return $this->hasRole('admin');
     }
 
+    //checks if user has role doctor
     public function isDoctor() {
       return $this->hasRole('doctor');
     }
 
+    //checks if user has role patient
     public function isPatient() {
       return $this->hasRole('patient');
     }

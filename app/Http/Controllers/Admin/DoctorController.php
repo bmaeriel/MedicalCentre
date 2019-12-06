@@ -19,6 +19,8 @@ use Illuminate\Http\Request;
 
 class DoctorController extends Controller
 {
+
+  //to be able to use the function, need to be authorized - admin
   public function __construct()
   {
       $this->middleware('auth');
@@ -31,7 +33,8 @@ class DoctorController extends Controller
      */
     public function index()
     {
-      $doctor = Doctor::all();
+      // limit data display to 6
+      $doctor = Doctor::orderBy('created_at','desc')->paginate(6);
       return view('admin.doctors.index')->with([
         'doctors' => $doctor
       ]);
@@ -64,6 +67,7 @@ class DoctorController extends Controller
         'phone_number' => ['required', 'string', 'max:255']
       ]);
 
+      //create new user
       $user = new User();
       $user->name = $request->input('name');
       $user->email = $request->input('email');
@@ -75,14 +79,15 @@ class DoctorController extends Controller
       $user->phone_number = $request->input('phone_number');
       $user->save();
 
+      //create new doctor
       $doctor = new Doctor();
-      $doctor->user_id = $user->id;
+      $doctor->user_id = $user->id; //set user id as doctor's user_id
       $doctor->date_start = $request->input('date_start');
       $doctor->save();
 
+      //attach doctor to a role
       $user->roles()->attach(Role::where('name','doctor')->first());
 
-      // DB::table('password_resets')->insert( ['email' => $request->email, 'token' => $token, 'created_at' => Carbon::now()] );
       $request->session()->flash('success', 'Doctor added successfully!'); //create flash message
       return redirect()->route('admin.doctors.index');
     }
@@ -96,6 +101,7 @@ class DoctorController extends Controller
     public function show($id)
     {
       $doctor = Doctor::findOrFail($id);
+      //get visits of doctor($id)
       $visits = $doctor->visits()->get();
       return view('admin.doctors.show')->with([
         'doctor' => $doctor,
@@ -135,7 +141,6 @@ class DoctorController extends Controller
         'phone_number' => ['required', 'string', 'max:255']
       ]);
 
-      $user = User::findOrFail($id);
       $doctor = Doctor::findOrFail($id);
       $doctor->user->name = $request->input('name');
       $doctor->user->email = $request->input('email');
@@ -145,10 +150,9 @@ class DoctorController extends Controller
       $doctor->user->city = $request->input('city');
       $doctor->user->country = $request->input('country');
       $doctor->user->phone_number = $request->input('phone_number');
-      $doctor->user_id = $user->id;
       $doctor->date_start = $request->input('date_start');
-      $doctor->user->save();
-
+      $doctor->user->save(); //save updates in user table
+      $doctor->save(); //save doctor
 
       $request->session()->flash('info', 'Doctor updated successfully!'); //create flash message
       return redirect()->route('admin.doctors.index');

@@ -33,6 +33,7 @@ class HomeController extends Controller
       $user = $request->user();
       $home = 'patient.home';
 
+      //if user has role (admin/doctor/patient) leads to specific dashboard
       if($user->hasRole('admin')){
         $home = 'admin.home';
       } else if($user->hasRole('doctor')){

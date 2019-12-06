@@ -3,10 +3,10 @@
 @section('content')
   <div class="container">
     <div class="row">
-      <div class="col-md-8 col-md-offset-2">
+      <div class="col-md-6 col-md-offset-2">
         <div class="card">
           <div class="card-header">
-            Patient Details: {{$patient->name}}
+            Patient details:
           </div>
           <div class="card-body">
               <table class="table table-hover">
@@ -20,20 +20,12 @@
                     <td>{{ $patient->user->email }}</td>
                   </tr>
                   <tr>
-                    <td>Address 1</td>
-                    <td>{{ $patient->user->address1 }}</td>
-                  </tr>
-                  <tr>
-                    <td>Address 2</td>
-                    <td>{{ $patient->user->address2 }}</td>
-                  </tr>
-                  <tr>
-                    <td>City</td>
-                    <td>{{ $patient->user->city }}</td>
-                  </tr>
-                  <tr>
-                    <td>Country</td>
-                    <td>{{ $patient->user->country }}</td>
+                    <td>Address</td>
+                    <td>{{ $patient->user->address1 }}
+                        {{ $patient->user->address2 }} </br>
+                        {{ $patient->user->city }}
+                        {{ $patient->user->country }}
+                    </td>
                   </tr>
                   <tr>
                     <td>Phone Number</td>
@@ -64,6 +56,8 @@
               </form>
           </div>
         </div>
+      </div>
+      <div class="col-md-6">
         <div class="card">
           <div class="card-header">
             Visits <a href="{{ route('admin.visits.create', $patient->id)}}" class="btn btn-primary float-right"> Add </a>
@@ -102,5 +96,4 @@
       </div>
     </div>
   </div>
-  @include('layouts.footer')
 @endsection

@@ -46,10 +46,12 @@
                 </tbody>
               </table>
             @endif
+            <div class="d-flex justify-content-center">
+              {{ $visits->links() }}
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  @include('layouts.footer')
 @endsection

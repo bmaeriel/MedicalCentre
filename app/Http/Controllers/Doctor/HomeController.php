@@ -27,8 +27,8 @@ class HomeController extends Controller
   }
 
   public function index() {
-
     $doctor = Auth::user();
+    //retrieve the visits of the doctor 
     $visits = $doctor->visits()->get();
     // dd($doctor);
     return view('doctor.home')->with([

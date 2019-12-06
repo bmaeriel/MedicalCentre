@@ -29,7 +29,8 @@ class PatientController extends Controller
    */
   public function index()
   {
-    $patients = Patient::all();
+    //limit data display to 6
+    $patients = Patient::orderBy('created_at','desc')->paginate(6);
     return view('admin.patients.index')->with([
       'patients' => $patients
     ]);
@@ -62,6 +63,7 @@ class PatientController extends Controller
       'phone_number' => ['required', 'string', 'max:255']
     ]);
 
+    //create new user
     $user = new User();
     $user->name = $request->input('name');
     $user->email = $request->input('email');
@@ -73,13 +75,15 @@ class PatientController extends Controller
     $user->phone_number = $request->input('phone_number');
     $user->save();
 
+    //create new patient
     $patient = new Patient();
-    $patient->user_id = $user->id;
+    $patient->user_id = $user->id; //set user id as patient's user_id
     $patient->medical_insurance = $request->input('medical_insurance');
     $patient->insurance_company = $request->input('insurance_company');
     $patient->policy_number = $request->input('policy_number');
     $patient->save();
 
+    //attact user to role - patient
     $user->roles()->attach(Role::where('name','patient')->first());
 
     $request->session()->flash('success', 'Patient added successfully!'); //create flash message
@@ -95,6 +99,7 @@ class PatientController extends Controller
   public function show($id)
   {
     $patient = Patient::findOrFail($id);
+    //retrieve visits of patient($id)
     $visits = $patient->visits()->get();
     return view('admin.patients.show')->with([
       'patient' => $patient,
@@ -134,21 +139,22 @@ class PatientController extends Controller
       'phone_number' => ['required', 'string', 'max:255']
     ]);
 
-    $user = User::findOrFail($id);
+
     $patient = Patient::findOrFail($id);
+    // dd($patient);
     $patient->user->name = $request->input('name');
     $patient->user->email = $request->input('email');
-    $patient->user->password = bcrypt('secret');
+    $patient->user->password = bcrypt('secret'); //set password to secret
     $patient->user->address1 = $request->input('address1');
     $patient->user->address2 = $request->input('address2');
     $patient->user->city = $request->input('city');
     $patient->user->country = $request->input('country');
     $patient->user->phone_number = $request->input('phone_number');
-    $patient->user_id = $user->id;
     $patient->medical_insurance = $request->input('medical_insurance');
     $patient->insurance_company = $request->input('insurance_company');
     $patient->policy_number = $request->input('policy_number');
-    $patient->user->save();
+    $patient->user->save(); //save updates in user table
+    $patient->save(); //save updates in patient table
 
     $request->session()->flash('info', 'Patient updated successfully!'); //create flash message
     return redirect()->route('admin.patients.index');

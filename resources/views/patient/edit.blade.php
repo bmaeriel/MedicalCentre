@@ -4,7 +4,7 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-8 col-md-offset-2">
-        <div class="card mt-4 mb-4">
+        <div class="card mb-5">
           <div class="card-header">
             Edit patient
           </div>
@@ -35,7 +35,7 @@
 
                 <div class="col">
                   <label for="password">Password</label>
-                  <input id="text" type="password" class="form-control @error('password') is-invalid @enderror" name="password" value="{{ old('password', $patient->user->password) }}">
+                  <input id="text" type="password" class="form-control @error('password') is-invalid @enderror" name="password" value="{{ old('password', Str::limit($patient->user->password,8)) }}">
                 </div>
                 <div class="col">
                   <label for="password">Confirm Password</label>
@@ -69,39 +69,44 @@
                 </div>
               </div>
               <div class="row form-group p-2">
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <label for="medical_insurance"> Medical Insurance </label> </br>
-                    <input id="Yes" onclick="showForm();" type="radio" name="medical_insurance" value="Yes" {{ ($patient->medical_insurance == 'Yes') ? "checked" : ""}}/> Yes</br>
-                    <input id="No" onclick="hideForm();" type="radio" name="medical_insurance" value="No" {{ ($patient->medical_insurance == 'No') ? "checked" : ""}}/> No</br>
+                  </div>
+                  <div class="col-md-2">
+                    <input id="Yes" type="radio" name="medical_insurance" value="Yes" {{ ($patient->medical_insurance == 'Yes') ? "checked" : ""}}/> Yes</br>
+                  </div>
+                  <div class="col-md-2">
+                    <input id="No" type="radio" name="medical_insurance" value="No" {{ ($patient->medical_insurance == 'No') ? "checked" : ""}}/> No</br>
                   </div>
               </div>
-
-              <div id="more-details" class="more-details">
-                <div class="form-group ">
+              <hr>
+              <div class="row form-group mb-0">
+                <div class="col">
+                  <p class="m-0"> If Yes, please fill up the following:</p>
+                </div>
+              </div>
+              <div class="form-group row m-0">
+                <div class="col p-0">
                       <label for="insurance_company"> Insurance company </label>
                         <input id="insurance_company" type="text" class="form-control" name="insurance_company" value="{{ old('insurance_company', $patient->insurance_company) }}"  autocomplete="insurance_company" autofocus>
                 </div>
-                <div class="form-group ">
+                <div class="col">
                       <label for="policy_number"> Policy Number </label>
                         <input id="policy_number" type="text" class="form-control" name="policy_number" value="{{ old('policy_number', $patient->policy_number) }}"  autocomplete="policy_number" autofocus>
                 </div>
               </div>
+              <div class="form-row pt-4">
+                <div class="col">
                 <a href="{{ route('patient.home', $patient->id) }}" class="btn btn-link"> Cancel </a>
                 <button type="submit" class="btn btn-primary float-right"> Submit </button>
+              </div>
+            </div>
+
             </form>
           </div>
         </div>
-        <script>
-          function showForm(){
-            document.getElementbyId(more-details).style.display = none;
-          }
 
-          function showForm(){
-            document.getElementbyId(more-details).style.display = show;
-          }
-        </script>
       </div>
     </div>
   </div>
-@include('layouts.footer')
 @endsection

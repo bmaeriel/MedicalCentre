@@ -23,6 +23,8 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+     //doctor can only view own profile
     public function show($id)
     {
       $doctor = Doctor::find($id);
@@ -38,6 +40,8 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+     //doctor can update own profile
     public function edit($id)
     {
       $doctor = Doctor::findOrFail($id);
@@ -65,19 +69,18 @@ class ProfileController extends Controller
         'phone_number' => ['required', 'string', 'max:255']
       ]);
 
-      $user = User::findOrFail($id);
       $doctor = Doctor::findOrFail($id);
       $doctor->user->name = $request->input('name');
       $doctor->user->email = $request->input('email');
-      $doctor->user->password = Hash::make($request['password']);
+      $doctor->user->password = Hash::make($request['password']); //encrypt password
       $doctor->user->address1 = $request->input('address1');
       $doctor->user->address2 = $request->input('address2');
       $doctor->user->city = $request->input('city');
       $doctor->user->country = $request->input('country');
       $doctor->user->phone_number = $request->input('phone_number');
-      $doctor->user_id = $user->id;
       $doctor->date_start = $request->input('date_start');
-      $doctor->user->save();
+      $doctor->user->save(); //save doctor info in user table
+      $doctor->save(); //save doctor
 
       $request->session()->flash('success', 'Profile updated successfully!'); //create flash message
       return redirect()->route('doctor.home');

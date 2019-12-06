@@ -28,6 +28,8 @@ class ProfileController extends Controller
     public function show($id)
     {
       // dd($id);
+
+      //get patient's id where user_id matches the $id
       $patient = Patient::where('user_id', $id)->first();
       // dd($patient);
        return view('patient.show')->with([
@@ -69,22 +71,20 @@ class ProfileController extends Controller
         'phone_number' => ['required', 'string', 'max:255']
       ]);
 
-      $user = User::findOrFail($id);
       $patient = Patient::findOrFail($id);
       $patient->user->name = $request->input('name');
       $patient->user->email = $request->input('email');
-      $patient->user->password = Hash::make($request['password']);
+      $patient->user->password = Hash::make($request['password']); //encrypt password
       $patient->user->address1 = $request->input('address1');
       $patient->user->address2 = $request->input('address2');
       $patient->user->city = $request->input('city');
       $patient->user->country = $request->input('country');
       $patient->user->phone_number = $request->input('phone_number');
-      $patient->user_id = $user->id;
-      $patient->date_start = $request->input('date_start');
       $patient->medical_insurance = $request->input('medical_insurance');
       $patient->insurance_company = $request->input('insurance_company');
       $patient->policy_number = $request->input('policy_number');
       $patient->user->save();
+      $patient->save();
 
       $request->session()->flash('success', 'Profile updated successfully!'); //create flash message
       return redirect()->route('patient.home');

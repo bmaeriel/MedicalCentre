@@ -21,12 +21,8 @@ class VisitController extends Controller
    */
   public function show($id)
   {
-    $doctor = Doctor::find(1);
-    $patient = Patient::find(1);
     $visit = Visit::find($id);
     return view('patient.visits.show')->with([
-      'doctors' => $doctor,
-      'patients' => $patient,
       'visit' => $visit
     ]);
   }
@@ -40,7 +36,6 @@ class VisitController extends Controller
   public function destroy(Request $request, $id)
   {
     $visit = Visit::findOrFail($id);
-    // $user = User::findOrFail($id);
     $visit->delete();
     $request->session()->flash('danger', 'Visit cancelled successfully!'); //create flash message
     return redirect()->route('patient.home');

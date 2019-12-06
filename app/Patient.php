@@ -31,9 +31,6 @@ class Patient extends Model
     return $this->belongsTo('App\User','user_id');
   }
 
-  // public function visits(){
-  //   return $this->belongsToMany('App\Doctor','visits','patient_id','doctor_id')->using('App\Visit');
-  // }
   public function visits(){
     return $this->hasMany('App\Visit','patient_id');
   }

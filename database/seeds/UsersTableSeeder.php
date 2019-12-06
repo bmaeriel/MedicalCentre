@@ -20,22 +20,25 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
+
+      //create users
         factory(App\User::class, 10)->create()->each(function($user){
           $user->roles()->attach(Role::where('name','doctor')->first());
+          //create doctor with user id
           factory(App\Doctor::class)->create(['user_id'=> $user->id]);
         });
 
-
-
+        //create users
         factory(App\User::class, 10)->create()->each(function($user){
           $user->roles()->attach(Role::where('name','patient')->first());
+          //create patients with user id
           factory(App\Patient::class)->create(['user_id'=> $user->id]);
         });
 
+        //set admin role
         $role_admin = Role::where('name','admin')->first();
-        $role_doctor = Role::where('name','doctor')->first();
-        $role_patient = Role::where('name','patient')->first();
 
+        //create user
         $admin = new User();
         $admin->name = 'Maeriel B';
         $admin->email = 'admin@medcentre.ie';
@@ -47,6 +50,7 @@ class UsersTableSeeder extends Seeder
         $admin->phone_number = '0' . $this->random_str(2, '0123456789') . '-' . $this->random_str(7, '0123456789');
         $admin->save();
 
+        //attach user to admin role
         $admin->roles()->attach($role_admin);
     }
 
