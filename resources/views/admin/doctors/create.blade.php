@@ -100,8 +100,6 @@
                     @enderror
                 </div>
               </div>
-
-
               <a href="{{ route('admin.doctors.index') }}" class="btn btn-link"> Cancel </a>
               <button type="submit" class="btn btn-primary float-right"> Submit </button>
             </form>

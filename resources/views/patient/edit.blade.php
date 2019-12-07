@@ -35,7 +35,7 @@
 
                 <div class="col">
                   <label for="password">Password</label>
-                  <input id="text" type="password" class="form-control @error('password') is-invalid @enderror" name="password" value="{{ old('password', Str::limit($patient->user->password,8)) }}">
+                  <input id="text" type="password" class="form-control @error('password') is-invalid @enderror" name="password" >
                 </div>
                 <div class="col">
                   <label for="password">Confirm Password</label>

@@ -4,9 +4,6 @@
 # @Last modified by:   maerielbenedicto
 # @Last modified time: 2019-11-19T00:46:46+00:00
 
-
-
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -28,7 +25,6 @@ class CreateDoctorsTable extends Migration
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
-
     }
 
     /**

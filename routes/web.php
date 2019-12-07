@@ -39,7 +39,7 @@ Route::delete('/admin/doctors/{id}', 'Admin\DoctorController@destroy')->name('ad
 //Doctors - doctors can read and update own details
 Route::get('/doctor/{id}', 'Doctor\ProfileController@show')->name('doctor.profile.show');
 Route::get('/doctor/{id}/edit', 'Doctor\ProfileController@edit')->name('doctor.profile.edit');
-Route::put('/doctors/{id}', 'Doctor\ProfileController@update')->name('doctor.profile.update');
+Route::put('/doctor/{id}', 'Doctor\ProfileController@update')->name('doctor.profile.update');
 
 //Patients - Admin can create, read, update and delete patients
 Route::get('/admin/patients', 'Admin\PatientController@index')->name('admin.patients.index');
@@ -65,7 +65,6 @@ Route::put('/admin/visits/{id}', 'Admin\VisitController@update')->name('admin.vi
 Route::delete('/admin/visits/{id}', 'Admin\VisitController@destroy')->name('admin.visits.destroy');
 
 //Visits - Doctors can create, read, update and delete(cancel) a visit
-Route::get('/doctor/visits', 'Doctor\VisitController@index')->name('doctor.visit.index');
 Route::get('/doctor/visits/create/{id}', 'Doctor\VisitController@create')->name('doctor.visit.create');
 Route::get('/doctor/visits/{id}', 'Doctor\VisitController@show')->name('doctor.visit.show');
 Route::post('/doctor/visits/store', 'Doctor\VisitController@store')->name('doctor.visit.store');
